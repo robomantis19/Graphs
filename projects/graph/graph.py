@@ -42,7 +42,7 @@ class Graph:
             current_node = q.dequeue()
             if current_node not in visited: 
                 visited.add(current_node)
-                neighbors = self.get_neightbors(current_node)
+                neighbors = self.get_neighbors(current_node)
                 for neighbor in neighbors: 
                     q.enqueue(neighbor)
 
@@ -53,7 +53,7 @@ class Graph:
         """
         s = Stack()
         s.push(starting_vertex)
-        visited = Set()
+        visited = set()
 
         while s.size > 0: 
             current_node = s.pop()
@@ -74,7 +74,18 @@ class Graph:
 
         This should be done using recursion.
         """
-        pass  # TODO
+        q = Queue()
+        q.enqueue(starting_vertex)
+
+        visited = set()
+
+        while q.size() > 0: 
+            current_node = q.dequeue()
+            if current_node not in visited: 
+                visited.add(current_node)
+                neighbors = self.get_neighbors(current_node)
+                for neighbor in neighbors: 
+                    q.enqueue(neighbor)
 
     def bfs(self, starting_vertex, destination_vertex):
         """
@@ -82,7 +93,21 @@ class Graph:
         starting_vertex to destination_vertex in
         breath-first order.
         """
-        pass  # TODO
+        q = Queue()
+        q.enqueue(starting_vertex)
+
+        visited = set()
+
+        while q.size() > 0: 
+            current_node = q.dequeue()
+            if current_node not in visited: 
+                if current_node == destination_vertex:
+                    
+                    break
+                visited.add(current_node)
+                neighbors = self.get_neighbors(current_node)
+                for neighbor in neighbors: 
+                    q.enqueue(neighbor)
 
     def dfs(self, starting_vertex, destination_vertex):
         """
@@ -90,7 +115,21 @@ class Graph:
         starting_vertex to destination_vertex in
         depth-first order.
         """
-        pass  # TODO
+        q = Queue()
+        q.enqueue(starting_vertex)
+
+        visited = set()
+
+        while q.size() > 0: 
+            current_node = q.dequeue()
+            if current_node not in visited:
+                if current_node == destination_vertex:
+                   
+                    break 
+                visited.add(current_node)
+                neighbors = self.get_neighbors(current_node)
+                for neighbor in neighbors: 
+                    q.enqueue(neighbor)
 
     def dfs_recursive(self, starting_vertex, destination_vertex):
         """
