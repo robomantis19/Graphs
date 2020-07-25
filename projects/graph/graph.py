@@ -67,25 +67,35 @@ class Graph:
 
 
 
-    def dft_recursive(self, starting_vertex):
+    def dft_recursive(self, vertex, visited = set()):
         """
         Print each vertex in depth-first order
         beginning from starting_vertex.
 
         This should be done using recursion.
         """
-        q = Queue()
-        q.enqueue(starting_vertex)
 
-        visited = set()
 
-        while q.size() > 0: 
-            current_node = q.dequeue()
-            if current_node not in visited: 
-                visited.add(current_node)
-                neighbors = self.get_neighbors(current_node)
-                for neighbor in neighbors: 
-                    q.enqueue(neighbor)
+        if vertex not in visited: 
+            visited.add(vertex)
+
+            neighbors = self.get_neighbors(vertex)
+            if len(neighbors) == 0: 
+                return visited
+            for neighbor in neighbors: 
+                self.dft_recursive(neighbor, visited)
+        # q = Queue()
+        # q.enqueue(starting_vertex)
+
+        # visited = set()
+
+        # while q.size() > 0: 
+        #     current_node = q.dequeue()
+        #     if current_node not in visited: 
+        #         visited.add(current_node)
+        #         neighbors = self.get_neighbors(current_node)
+        #         for neighbor in neighbors: 
+        #             q.enqueue(neighbor)
 
     def bfs(self, starting_vertex, destination_vertex):
         """
@@ -93,21 +103,44 @@ class Graph:
         starting_vertex to destination_vertex in
         breath-first order.
         """
+
         q = Queue()
-        q.enqueue(starting_vertex)
-
         visited = set()
-
+        path = [starting_vertex]
+        print('starting_vertex', starting_vertex)
+        q.enqueue(path)
+        
         while q.size() > 0: 
-            current_node = q.dequeue()
+            #dequeue is from the front of the line.
+            current_path = q.dequeue()
+            current_node = current_path[-1]
+            if current_node == destination_vertex: 
+                return current_path
             if current_node not in visited: 
-                if current_node == destination_vertex:
-                    
-                    break
                 visited.add(current_node)
                 neighbors = self.get_neighbors(current_node)
+
                 for neighbor in neighbors: 
-                    q.enqueue(neighbor)
+                    neighbor_path = current_path.copy()
+                    neighbor_path.append(neighbor)
+                    q.enqueue(neighbor_path)
+
+
+        # q = Queue()
+        # q.enqueue(starting_vertex)
+
+        # visited = set()
+
+        # while q.size() > 0: 
+        #     current_node = q.dequeue()
+        #     if current_node not in visited: 
+        #         if current_node == destination_vertex:
+                    
+        #             break
+        #         visited.add(current_node)
+        #         neighbors = self.get_neighbors(current_node)
+        #         for neighbor in neighbors: 
+        #             q.enqueue(neighbor)
 
     def dfs(self, starting_vertex, destination_vertex):
         """
@@ -115,23 +148,48 @@ class Graph:
         starting_vertex to destination_vertex in
         depth-first order.
         """
-        q = Queue()
-        q.enqueue(starting_vertex)
-
+        q = Stack()
         visited = set()
-
+        path = [starting_vertex]
+        print('starting_vertex', starting_vertex)
+        q.push(path)
+       
         while q.size() > 0: 
-            current_node = q.dequeue()
-            if current_node not in visited:
-                if current_node == destination_vertex:
-                   
-                    break 
+            #dequeue is from the front of the line.
+            current_path = q.pop()
+            current_node = current_path[-1]
+            if current_node == destination_vertex: 
+                return current_path
+            if current_node not in visited: 
                 visited.add(current_node)
                 neighbors = self.get_neighbors(current_node)
-                for neighbor in neighbors: 
-                    q.enqueue(neighbor)
 
-    def dfs_recursive(self, starting_vertex, destination_vertex):
+                for neighbor in neighbors: 
+                    neighbor_path = current_path.copy()
+                    neighbor_path.append(neighbor)
+                    q.push(neighbor_path)
+
+
+
+
+
+        # q = Queue()
+        # q.enqueue(starting_vertex)
+
+        # visited = set()
+
+        # while q.size() > 0: 
+        #     current_node = q.dequeue()
+        #     if current_node not in visited:
+        #         if current_node == destination_vertex:
+                   
+        #             break 
+        #         visited.add(current_node)
+        #         neighbors = self.get_neighbors(current_node)
+        #         for neighbor in neighbors: 
+        #             q.enqueue(neighbor)
+
+    def dfs_recursive(self, vertex, visited = set()):
         """
         Return a list containing a path from
         starting_vertex to destination_vertex in
@@ -139,7 +197,15 @@ class Graph:
 
         This should be done using recursion.
         """
-        pass  # TODO
+        if vertex not in visited: 
+            visited.add(vertex)
+
+            neighbors = self.get_neighbors(vertex)
+            if len(neighbors) == 0: 
+                return visited
+            for neighbor in neighbors: 
+                self.dfs_recursive(neighbor, visited)
+        
 
 if __name__ == '__main__':
     graph = Graph()  # Instantiate your graph
