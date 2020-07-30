@@ -26,11 +26,12 @@ def earliest_ancestor(ancestors, starting_node):
             if current_node not in visited : 
                 visited.add(current_node)
 
-                neighbors = get_neighbors(current_node)
-                for neighbor in neighbors: 
-                    s.push(neighbor)
+            neighbors = get_neighbors(current_node)
+            for neighbor in neighbors: 
+                s.push(neighbor)
             
-        return list(visited)[0]
+        return list(visited)
+        # print(vertices)
 
     
 
@@ -40,13 +41,13 @@ def earliest_ancestor(ancestors, starting_node):
         children.append(ancestors[i][1])
         addVertex(ancestors[i][0])
         addVertex(ancestors[i][1])
-        addEdge(ancestors[i][0], ancestors[i][1])
+        addEdge(ancestors[i][1], ancestors[i][0])
 
     found = dfs(starting_node)
     print('found', found)
-    for key, value in vertices.items(): 
-        print('value', value)
-        if value == found :
-            print('key', key)
+    # for key, value in vertices.items(): 
+    #     print('value', value)
+    #     if value == found :
+    #         print('key', key)
 
 
